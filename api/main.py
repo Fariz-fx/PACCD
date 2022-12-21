@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-#from dotenv import dotenv_values
+from dotenv import dotenv_values
 from azure.cosmos.aio import CosmosClient
 from azure.cosmos import PartitionKey, exceptions
 from routes import router as todo_router
 
-#config = dotenv_values(".env")
+config = dotenv_values(".env")
 app = FastAPI()
 DATABASE_NAME = "todo-db"
 CONTAINER_NAME = "todo-items"
