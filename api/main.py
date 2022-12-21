@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from dotenv import dotenv_values
+#from dotenv import dotenv_values
 from azure.cosmos.aio import CosmosClient
 from azure.cosmos import PartitionKey, exceptions
 from routes import router as todo_router
 
-config = dotenv_values(".env")
+#config = dotenv_values(".env")
 app = FastAPI()
 DATABASE_NAME = "todo-db"
 CONTAINER_NAME = "todo-items"
@@ -13,7 +13,7 @@ app.include_router(todo_router, tags=["todos"], prefix="/todos")
 
 @app.on_event("startup")
 async def startup_db_client():
-    app.cosmos_client = CosmosClient(config["URI"], credential = config["KEY"])
+    app.cosmos_client = CosmosClient(config["${{ secrets.ACR_URI }}"], credential = config["${{ secrets.COSMOS_KEY }}"])
     await get_or_create_db(DATABASE_NAME)
     await get_or_create_container(CONTAINER_NAME)
 
