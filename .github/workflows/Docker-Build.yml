@@ -29,6 +29,5 @@ jobs:
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
         - run: |
-            echo $env.PATH
             docker build . -f Dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
             docker push ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
