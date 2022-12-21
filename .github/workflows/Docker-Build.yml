@@ -1,0 +1,33 @@
+name: Docker Build Image
+
+on: 
+  #push:
+    #branches: [ "main" ]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: api
+
+jobs:
+    Docker-build-:
+        runs-on: ubuntu-latest
+        steps:
+        # checkout the repo
+        - name: 'Checkout GitHub Action'
+          uses: actions/checkout@main
+          
+        - name: 'Login via Azure CLI'
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+        - name: 'Build and push image'
+          uses: azure/docker-login@v1
+          with:
+            login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+            username: ${{ secrets.ACR_USERNAME }}
+            password: ${{ secrets.ACR_PASSWORD }}
+        - run: |
+            docker build . -f Dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
+            docker push ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
