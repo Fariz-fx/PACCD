@@ -1,4 +1,4 @@
-name: Container App Build & Deploy
+name: Test: Container App Build & Deploy
 
 # When this action will be executed
 on:
