@@ -3,6 +3,11 @@ name: Docker Build Image
 on: 
   #push:
     #branches: [ "main" ]
+  workflow_run:
+    workflows: ["Build Python application"]
+    branches: [main]
+    types: 
+      - completed
   workflow_dispatch:
 
 defaults:
