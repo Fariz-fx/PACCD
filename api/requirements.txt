@@ -13,3 +13,6 @@ h11
 starlette
 aiohttp
 gunicorn
+opencensus
+opencensus-ext-azure
+opencensus-ext-logging
