@@ -12,3 +12,4 @@ azure-cosmos
 h11
 starlette
 aiohttp
+gunicorn
