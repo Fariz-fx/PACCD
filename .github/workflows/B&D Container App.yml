@@ -1,4 +1,4 @@
-name: Trigger auto deployment for fx-t-eu-paccd-01-ca
+name: Container App Build & Deploy
 
 # When this action will be executed
 on:
