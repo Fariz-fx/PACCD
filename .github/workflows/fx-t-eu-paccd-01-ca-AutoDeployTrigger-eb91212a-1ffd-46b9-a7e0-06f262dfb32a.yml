@@ -40,8 +40,8 @@ jobs:
         with:
           push: true
           tags: fxteupaccd01cr.azurecr.io/fx-t-eu-paccd-01-ca:${{ github.sha }}
-          #file: ./Dockerfile
-          #context: ./
+          file: ./api/Dockerfile
+          context: ./api
 
 
   deploy:
