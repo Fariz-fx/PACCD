@@ -36,7 +36,7 @@ app.include_router(todo_router, tags=["todos"], prefix="/todos")
 #dotenv_values
 #dotenv_values()
 #APPINSIGHTS_INSTRUMENTATIONKEY = os.environ["APPINSIGHTS_INSTRUMENTATIONKEY"]
-#APPINSIGHTS_INSTRUMENTATIONKEY= "ad879281-228c-4fbd-82c5-59a129798251"
+
 
 APPINSIGHTS_INSTRUMENTATIONKEY= config["APPINSIGHTS_INSTRUMENTATIONKEY"]
 HTTP_URL = COMMON_ATTRIBUTES['HTTP_URL']
@@ -54,7 +54,6 @@ async def startup_db_client():
     logger = logging.getLogger(__name__)
 
     handler = AzureLogHandler(connection_string=f'InstrumentationKey={APPINSIGHTS_INSTRUMENTATIONKEY}')
-    #handler = AzureLogHandler(connection_string=f'InstrumentationKey=config["APPINSIGHTS_INSTRUMENTATIONKEY"];IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/')
     logger.addHandler(handler)
     
 @app.on_event('shutdown')
@@ -145,4 +144,6 @@ async def log_custom_metric():
     view_manager.register_exporter(exporter)
     return "Log custom metric"
 
-
+if __name__=="__main__":
+    print("main started")
+    uvicorn.run("main:app", port=3100, log_level="info")

@@ -10,6 +10,7 @@ import logging, time
 
 router = APIRouter()
 
+logger = logging.getLogger(__name__)
 
 @router.post("/insert", response_model=ToDoItem)
 async def create_todo(request: Request, todo_item: ToDoItem):
@@ -53,12 +54,13 @@ async def replace_todo(request: Request, item_with_update:ToDoItem):
         if update_dict[k]:
             existing_item_dict[k] = update_dict[k]
     updatedItem = await request.app.todo_items_container.replace_item(item_with_update.id, existing_item_dict)    
+    logger.info("Info updated")
     return updatedItem
 
 
 @router.delete("/delete")
 async def delete_todo(request: Request, item_id: str, pk: str):
-     message="deleting club"
+     message="deleting Data"
      print(message)
      logger.info(message)
      await request.app.todo_items_container.delete_item(item_id, partition_key=pk)
