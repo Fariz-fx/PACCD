@@ -34,15 +34,18 @@ jobs:
           registry: fxteupaccd01cr.azurecr.io
           username: ${{ secrets.FXTEUPACCD01CA_REGISTRY_USERNAME }}
           password: ${{ secrets.FXTEUPACCD01CA_REGISTRY_PASSWORD }}
-          
+                
       - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.3.0
+        with:
+          envkey_URI: ${{ secrets.COSMOS_URI }}
+          envkey_KEY: ${{ secrets.COSMOS_KEY }}
+          file_name: .env
+          fail_on_empty: true
+
+      - name: Check the .env file
         run: |
           pwd
-          ls
-          touch .env
-          echo URI: ${{ secrets.COSMOS_URI }} >> .env
-          echo KEY: ${{ secrets.COSMOS_KEY }} >> .env
-          cat .env
           ls
 
       - name: Build and push container image to registry
