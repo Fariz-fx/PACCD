@@ -1,0 +1,2 @@
+URI = os.env.COSMOS_URI
+KEY = os.env.COSMOS_KEY
