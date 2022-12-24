@@ -19,13 +19,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         
-        - name: Check the location
-          run:
-            pwd
+        #- name: Check the location
+          #run:
+            #pwd
             
-        - name: List the files
-          run:
-            ls        
+        #- name: List the files
+          #run:
+            #ls        
                   
         - name: Create .env file
           uses: SpicyPizza/create-envfile@v1.3.0
