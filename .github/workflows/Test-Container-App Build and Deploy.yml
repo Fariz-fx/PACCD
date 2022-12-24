@@ -49,6 +49,12 @@ jobs:
           tags: fxteupaccd01cr.azurecr.io/fx-t-eu-paccd-01-ca:${{ github.sha }}
           file: ./api/Dockerfile
           context: ./api
+          
+      - name: List files
+        run: |
+          pwd
+          ls
+         
 
 
   deploy:
