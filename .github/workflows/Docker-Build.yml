@@ -26,6 +26,13 @@ jobs:
           uses: azure/login@v1
           with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
+            
+        - name: Create .env file
+          run: |
+            touch .env
+            echo URI: ${{ secrets.COSMOS_URI }} >> .env
+            echo KEY: ${{ secrets.COSMOS_KEY }} >> .env
+            cat .env
         
         - name: 'Build and push image'
           uses: azure/docker-login@v1
