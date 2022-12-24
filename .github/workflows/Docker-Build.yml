@@ -33,6 +33,19 @@ jobs:
             echo URI: ${{ secrets.COSMOS_URI }} >> .env
             echo KEY: ${{ secrets.COSMOS_KEY }} >> .env
             cat .env
+            
+        - name: Create .env file
+          uses: SpicyPizza/create-envfile@v1.3.0
+          with:
+            envkey_URI: ${{ secrets.COSMOS_URI }}
+            envkey_KEY: ${{ secrets.COSMOS_KEY }}
+            file_name: .env
+            fail_on_empty: true
+            
+        - name: Check the file
+          run:
+            pwd
+            ls
         
         - name: 'Build and push image'
           uses: azure/docker-login@v1
