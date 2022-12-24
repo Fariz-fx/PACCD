@@ -5,15 +5,18 @@
 name: Build and deploy Python app to Azure Web App - fx-t-eu-paccd-01-app
 
 on:
-  push:
-    branches:
-      - main
+  #push:
+    #branches:
+      #- main
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env: 
+        COSMOS_URI: ${{ secrets.COSMOS_URI }}
+        COSMOS_KEY: ${{ secrets.COSMOS_KEY }}
+    
     steps:
       - uses: actions/checkout@v2
 
@@ -44,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'Testing'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
