@@ -17,9 +17,9 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env: 
-        COSMOS_URI: ${{ secrets.COSMOS_URI }}
-        COSMOS_KEY: ${{ secrets.COSMOS_KEY }}
+    #env: 
+        #COSMOS_URI: ${{ secrets.COSMOS_URI }}
+        #COSMOS_KEY: ${{ secrets.COSMOS_KEY }}
     
     steps:
       - uses: actions/checkout@v2
@@ -38,6 +38,13 @@ jobs:
         run: pip install -r ./api/requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      
+      - name: Create .env file
+        run: |
+          touch .env
+          echo URI: ${{ secrets.COSMOS_URI }} >> .env
+          echo KEY: ${{ secrets.COSMOS_KEY }} >> .env
+          cat .env
       
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
