@@ -48,6 +48,14 @@ jobs:
         - name: 'Checkout GitHub Action'
           uses: actions/checkout@main
           
+        - name: Check the location
+          run:
+            pwd
+                    
+        - name: List the files
+          run:
+            ls  
+          
         - name: 'Login via Azure CLI'
           uses: azure/login@v1
           with:
