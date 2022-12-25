@@ -1,6 +1,29 @@
-# Simple Python web backend with Cosmos DB and Fast API
+# PACCD ToDO Application
 
-This python project creates a very simple three-tiered ToDo web app backend using Cosmos DB as the database and FastAPI as the python web framework to expose API endpoints for performing CRUD operations.
+PACCD is a simple Python FastAPI application which will deploy its docker image to Azure Container App, Azure Cosmos DB and captures metrics and logs in App insights
+
+This application creates a very simple three-tiered ToDo web app backend using Cosmos DB as the database and FastAPI as the python web framework to expose API endpoints for performing CRUD operations and to monitor we will make use application insight and Grafana
+
+## Link
+Application Link:
+
+* Test App link: https://fx-t-eu-paccd-01-ca.wittyforest-11fef98c.eastus.azurecontainerapps.io/docs
+* Prod App Link: https://fx-p-eu-paccd-02-ca.ambitioustree-10d1932a.eastus.azurecontainerapps.io/docs
+
+Grafana Link:
+* Test Grafana Dashboard: https://farizfx.grafana.net/d/gSMia4pVz/test-paccd?orgId=1&from=now-24h&to=now
+* Prod Grafana Dashboard: https://farizfx.grafana.net/d/pSMia4pVz/prod-paccd?orgId=1
+
+Azure Repo Link: 
+* Azure Repo for Work capture: https://dev.azure.com/fareesdeveloper0547/Fenesys
+
+Workflow
+* It have 2 environments Prod and test.
+* Developer can clone this repo and use vs.code to perform development activity
+* Once they are happy with the development raise pull request and once approved, they can check deployment of docker image in test environment
+  Note: During PR, 2 github actions will run to check vulnerabilities and syntax error
+* For Prod Deployment, it will automatically go for admin approval, once approved resources will be pushed to prod
+
 
 ## Features
 
@@ -16,36 +39,19 @@ This project demonstrates the use of the Cosmos DB python SDK with FastAPI . It 
 * Write functions to interact with the database 
 * Expose the API endpoints with FastAPI 
 * Test the endpoints 
+* Configure Dashboard
+* Configure alert
 
-## Getting Started
+## Source: 
+This project is inspired from 
+* https://github.com/Azure-Samples/cosmosdb-python-fastapi
+* https://github.com/Azure-Samples/opencensus-with-fastapi-and-azure-monitor
 
-### Prerequisites
+## Project Files:
 
-- Python 3.6+
-
-### Installation
-
-Install the required libraries
-- pip install fastapi
-- pip install fastapi uvicorn
-- pip install python-dotenv
-- pip install aiohttp
-- pip install azure-cosmos
-
-### Quickstart
-
-1. git clone [repository clone url]
-2. cd [repository name]
-
-
-## Demo
-
-Test out the API endpoints:
-
-1. cd [repository name]
-2. uvicorn main:app –reload
-3. In your browser, go to http://localhost:8000/docs 
-
+* Code present in api directory -> https://github.com/Fariz-fx/PACCD/tree/main/api/
+* Bicep Template present in iac -> https://github.com/Fariz-fx/PACCD/tree/main/iac
+* Github Workflow present in default location: https://github.com/Fariz-fx/PACCD/tree/main/.github
 
 ## Resources
 
