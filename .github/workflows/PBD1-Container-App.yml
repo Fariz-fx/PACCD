@@ -10,8 +10,6 @@ on:
   workflow_run:
     workflows: ["Container App Build & Deploy in Test Environment"]
     branches: [main]
-    types: 
-       - completed
 	
   # Allow mannually trigger 
   workflow_dispatch:      
