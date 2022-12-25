@@ -1,0 +1,40 @@
+name: Prod Container App Build & Deploy
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  #push:
+    #branches: 
+      #[ main ]
+    #paths:
+    #- '**'
+    #- '.github/workflows/fx-t-eu-paccd-01-ca-AutoDeployTrigger-eb91212a-1ffd-46b9-a7e0-06f262dfb32a.yml'
+   workflow_run:
+    workflows: ["Container App Build & Deploy in Test Environment"]
+    branches: [main]
+    types: 
+      - completed
+	
+  # Allow mannually trigger 
+  workflow_dispatch:      
+
+defaults:
+  run:
+    working-directory: api
+
+jobs:
+  ACR-Import-to-PROD:
+    runs-on: ubuntu-latest
+
+    steps:
+		- name: Checkout to the branch
+		  uses: actions/checkout@v2
+
+		- name: Push Image from Test ACR to PROD ACR
+		  uses: azure/CLI@v1
+		  with:
+		    inlineScript: |
+				az acr import --name fxpeupaccd02cr.azurecr.io --force \
+					--source fxteupaccd01cr.azurecr.io/fx-t-eu-paccd-01-ca:${{ github.sha }} \
+					--image fx-p-eu-paccd-02-ca:${{ github.sha }} \
+					--registry /subscriptions/{{ secrets.SUBSCRIPTION_ID }}/resourceGroups/fx-t-eu-paccd-01-rg/providers/Microsoft.ContainerRegistry/registries/fxteupaccd01cr.azurecr.io
