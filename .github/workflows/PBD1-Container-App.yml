@@ -1,18 +1,17 @@
 name: Prod Container App Build & Deploy
 
 # When this action will be executed
-on:
-  # Automatically trigger it when detected changes in repo
+on: 
   push:
-    branches: [ main ]
-    paths:
-    - '**'
+    branches: [ "main" ]
+  #pull_request:
+    #branches: [ "main" ]
   workflow_run:
-    workflows: ["Container App Build & Deploy in Test Environment"]
+    workflows: ["Build Python application and Check Vulnerabilities"]
     branches: [main]
-	
-  # Allow mannually trigger 
-  workflow_dispatch:      
+    types: 
+      - completed
+  workflow_dispatch:
 
 defaults:
   run:
