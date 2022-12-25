@@ -18,7 +18,7 @@ defaults:
     working-directory: api
 
 jobs:
-  ACR-Import-to-PROD:
+  ACR-PROD-Build:
     runs-on: ubuntu-latest
     env:
       URI: ${{ secrets.URI }}
@@ -46,3 +46,22 @@ jobs:
           tags: fxpeupaccd02cr.azurecr.io/fx-p-eu-paccd-02-ca:${{ github.sha }}
           file: ./api/Dockerfile
           context: ./api
+    
+  deploy:
+    runs-on: ubuntu-latest
+    needs: ACR-PROD-Build
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.FXPEUPACCD02CA_AZURE_CREDENTIALS }}
+
+
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            az containerapp registry set -n fx-p-eu-paccd-02-ca -g fx-p-eu-paccd-02-rg --server fxpeupaccd02cr.azurecr.io --username  ${{ secrets.FXPEUPACCD02CA_REGISTRY_USERNAME }} --password ${{ secrets.FXPEUPACCD02CA_REGISTRY_PASSWORD }}
+            az containerapp update -n fx-p-eu-paccd-02-ca -g fx-p-eu-paccd-02-rg --image fxpeupaccd02cr.azurecr.io/fx-p-eu-paccd-02-ca:${{ github.sha }}
