@@ -16,7 +16,7 @@ on:
       - completed
 	
   # Allow mannually trigger 
-  workflow_dispatch:      
+   workflow_dispatch:      
 
 defaults:
   run:
