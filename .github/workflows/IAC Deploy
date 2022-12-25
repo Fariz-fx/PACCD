@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "iac/bicep/**"
+      - "iac/**"
   # For Manual trigger
   workflow_dispatch:
 jobs:
