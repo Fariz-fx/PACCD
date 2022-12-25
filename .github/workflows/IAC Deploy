@@ -1,0 +1,89 @@
+name: PR-IaC(Bicep) Deployment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "iac/bicep/**"
+  # For Manual trigger
+  workflow_dispatch:
+jobs:
+  Preview_job:
+    name: "Preview Job for Bicep Infra 1"
+    runs-on: ubuntu-latest
+    steps:
+    
+    #Checkout Code
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    # Get RESOURCES_PREFIX based on the repo name
+    - name: Get repo name
+      # actions/github-script@v6 is breaking change which is node16
+      uses: actions/github-script@v5
+      id: resources_prefix
+      with:
+          result-encoding: string
+          script: return context.repo.repo.toLowerCase()
+    # Usage for current job: ${{ steps.resources_prefix.outputs.result }}
+    
+    # Login to Azure
+    - name: Azure Login
+      uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+   
+    # Lint - Bicep Check for Syntax error
+    - name: Preview Changes using Whatif
+      uses: azure/CLI@v1
+      with:
+        # azcliversion: 2.30.0
+        inlineScript: |
+          az deployment sub what-if \
+            --name ${{ github.run_id }} \
+            --parameters resourcesPrefix="${{ steps.resources_prefix.outputs.result }}" \
+            --template-file ./iac/bicep/template.bicep \
+            --location eastus
+           az logout
+          
+  Deployment_job:
+    name: "Deployment Job for Bicep Infra 1"
+    runs-on: ubuntu-latest
+    needs: [Preview_job]
+    environment: production
+    steps:
+    #Checkout Code
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    # Get RESOURCES_PREFIX based on the repo name
+    - name: Get repo name
+      # actions/github-script@v6 is breaking change which is node16
+      uses: actions/github-script@v5
+      id: resources_prefix
+      with:
+          result-encoding: string
+          script: return context.repo.repo.toLowerCase()
+    # Usage for current job: ${{ steps.resources_prefix.outputs.result }}
+    
+    # Login to Azure
+    - name: Azure Login
+      uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    
+    # Lint - Bicep Check for Syntax error
+    - name: Deploy Changes
+      uses: azure/CLI@v1
+      with:
+        # azcliversion: 2.30.0
+        inlineScript: |
+          az deployment sub create \
+            --name ${{ github.run_id }} \
+            --parameters resourcesPrefix="${{ steps.resources_prefix.outputs.result }}" \
+            --template-file ./iac/bicep/template.bicep \
+            --location eastus
+           az logout
