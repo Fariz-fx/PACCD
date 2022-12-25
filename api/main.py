@@ -1,5 +1,7 @@
 from fastapi import FastAPI,Request
 from dotenv import dotenv_values
+from dotenv import load_dotenv
+#Cosmos import
 from azure.cosmos.aio import CosmosClient
 from azure.cosmos import PartitionKey, exceptions
 from routes import router as todo_router
@@ -14,7 +16,8 @@ from opencensus.trace import config_integration
 from opencensus.ext.azure.log_exporter import AzureLogHandler
 #Logging
 from datetime import datetime
-import logging, time, os, uvicorn
+import logging, time
+import os, uvicorn
 from pydantic import BaseModel
 # Metric imports
 from opencensus.ext.azure import metrics_exporter
@@ -23,36 +26,42 @@ from opencensus.stats import measure as measure_module
 from opencensus.stats import stats as stats_module
 from opencensus.stats import view as view_module
 from opencensus.tags import tag_map as tag_map_module
+# Importing HTTP
+import http.client
 
+# Capturing Logs
 logger = logging.getLogger(__name__)
-
-config = dotenv_values(".env")
+# Fastapi
 app = FastAPI()
+# variable declaration
+#config = dotenv_values(".env")
 DATABASE_NAME = "todo-db"
 CONTAINER_NAME = "todo-items"
 
 app.include_router(todo_router, tags=["todos"], prefix="/todos")
 
-#dotenv_values
-#dotenv_values()
-#APPINSIGHTS_INSTRUMENTATIONKEY = os.environ["APPINSIGHTS_INSTRUMENTATIONKEY"]
-
-
-APPINSIGHTS_INSTRUMENTATIONKEY= config["APPINSIGHTS_INSTRUMENTATIONKEY"]
+load_dotenv()
+APPINSIGHTS_INSTRUMENTATIONKEY = os.environ["APPINSIGHTS_INSTRUMENTATIONKEY"]
+uri = os.environ["URI"]
+key = os.environ["KEY"]
+client = CosmosClient(uri,key)
+# Metric related
+#APPINSIGHTS_INSTRUMENTATIONKEY= config["APPINSIGHTS_INSTRUMENTATIONKEY"]
 HTTP_URL = COMMON_ATTRIBUTES['HTTP_URL']
 HTTP_STATUS_CODE = COMMON_ATTRIBUTES['HTTP_STATUS_CODE']
 
 # On startup
 @app.on_event("startup")
 async def startup_db_client():
-    app.cosmos_client = CosmosClient(config["URI"], credential = config["KEY"])
+    #app.cosmos_client = CosmosClient(config["URI"], credential = config["KEY"])
+    
+    app.cosmos_client=client
     await get_or_create_db(DATABASE_NAME)
     await get_or_create_container(CONTAINER_NAME)
-
+    # Setting up logger for Configuration
     print('DataBase & App Insights configured successfully')
     config_integration.trace_integrations(['logging'])
     logger = logging.getLogger(__name__)
-
     handler = AzureLogHandler(connection_string=f'InstrumentationKey={APPINSIGHTS_INSTRUMENTATIONKEY}')
     logger.addHandler(handler)
     
@@ -63,6 +72,7 @@ async def shutdown_event():
     logger.info(message)
     await get_http_client_session().close()
 
+# App Insight config
 app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     tracer = Tracer(exporter=AzureExporter(connection_string=f'InstrumentationKey={APPINSIGHTS_INSTRUMENTATIONKEY}'),sampler=ProbabilitySampler(1.0))
@@ -79,7 +89,7 @@ async def add_process_time_header(request: Request, call_next):
             attribute_value=str(request.url))
         
     return response
-
+# Home/ root page setting
 @app.get("/")
 async def root(request:Request):
     message="PACCD is working successfylly, Use /docs at the end of URL to Launcg fast API"

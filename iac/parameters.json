@@ -1,0 +1,96 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webhooks_paccd064407_serviceUri": {
+            "value": null
+        },
+        "workbooks_523e27af_8980_4ba7_aeec_66972873f100_serializedData": {
+            "value": null
+        },
+        "vaults_fx-p_eu_paccd_01_kv_name": {
+            "value": null
+        },
+        "containerapps_fx-p_eu_paccd_01_ca_name": {
+            "value": null
+        },
+        "actionGroups_fx-p_eu_paccd_01_ag_name": {
+            "value": null
+        },
+        "components_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "metricAlerts_fx-p_paccd_httpalert_name": {
+            "value": null
+        },
+        "registries_fxpeupaccd01cr_name": {
+            "value": null
+        },
+        "managedEnvironments_fx-p_eu_paccd_01_ace_name": {
+            "value": null
+        },
+        "databaseAccounts_fx-p_eu_paccd_01_cosmos_name": {
+            "value": null
+        },
+        "workspaces_fx-p_eu_paccd_01_log_name": {
+            "value": null
+        },
+        "workbooks_523e27af_8980_4ba7_aeec_66972873f100_name": {
+            "value": null
+        },
+        "actionRules_fx-p_paccd_alertprocesingrule_name": {
+            "value": null
+        },
+        "webtests_get_cosmos_request_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "metricalerts_get_cosmos_request_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "webtests_test_swagger_paccd_url_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "webtests_home_paccd_url__for_test_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "dashboards_c0e521e5_c101_407c_be19_6eb3db9f43aa_dashboard_name": {
+            "value": null
+        },
+        "metricalerts_test_swagger_paccd_url_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "webtests_custom_metric_health_check_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "webtests_delete_cosmos_health_check_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "webtests_put_cosmos_db_health_check_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "metricalerts_home_paccd_url__for_test_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "webtests_post_cosmos_data_health_check_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "metricalerts_custom_metric_health_check_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "metricalerts_delete_cosmos_health_check_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "metricalerts_put_cosmos_db_health_check_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "metricalerts_post_cosmos_data_health_check_fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "smartdetectoralertrules_failure_anomalies___fx-p_eu_paccd_01_appi_name": {
+            "value": null
+        },
+        "actiongroups_application_insights_smart_detection_externalid": {
+            "value": null
+        }
+    }
+}
