@@ -22,7 +22,10 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      URI: ${{ secrets.URI }}
+      KEY: ${{ secrets.KEY }}
+      APPINSIGHTS_INSTRUMENTATIONKEY: ${{ secrets.APPINSIGHTS_INSTRUMENTATIONKEY }}
     steps:
       - name: Checkout to the branch
         uses: actions/checkout@v2
@@ -42,6 +45,7 @@ jobs:
         with:
           envkey_URI: ${{ secrets.COSMOS_URI }}
           envkey_KEY: ${{ secrets.COSMOS_KEY }}
+          envkey_APPINSIGHTS_INSTRUMENTATIONKEY: ${{ secrets.APPINSIGHTS_INSTRUMENTATIONKEY }}
           file_name: .env
           fail_on_empty: true
 
