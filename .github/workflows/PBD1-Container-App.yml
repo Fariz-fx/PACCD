@@ -38,3 +38,11 @@ jobs:
          registry: fxpeupaccd02cr.azurecr.io
          username: ${{ secrets.PROD_REGISTRY_USERNAME }}
          password: ${{ secrets.PROD_REGISTRY_PASSWORD }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+          push: true
+          tags: fxpeupaccd02cr.azurecr.io/fx-p-eu-paccd-02-ca:${{ github.sha }}
+          file: ./api/Dockerfile
+          context: ./api
