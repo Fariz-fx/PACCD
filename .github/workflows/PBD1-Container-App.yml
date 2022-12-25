@@ -4,6 +4,9 @@ name: Prod Container App Build & Deploy
 on: 
   push:
     branches: [ "main" ]
+    paths:
+    - '**.py'
+    - '**.Dockerfile'
   #pull_request:
     #branches: [ "main" ]
   workflow_run:
