@@ -1,18 +1,20 @@
-name: Test Container App Build & Deploy
+name: Container App Build & Deploy in Test Environment
 
 # When this action will be executed
 on:
   # Automatically trigger it when detected changes in repo
-  #push:
-    #branches: 
-      #[ main ]
-    #paths:
-    #- '**'
+  push:
+    branches: 
+      -  'main'
+      - 'releases/**'
+    paths:
+    - '**.py'
+    - '**.Dockerfile'
     #- '.github/workflows/fx-t-eu-paccd-01-ca-AutoDeployTrigger-eb91212a-1ffd-46b9-a7e0-06f262dfb32a.yml'
 
   # Allow mannually trigger 
   workflow_dispatch:      
-
+# Setting Working Directory
 defaults:
   run:
     working-directory: api
