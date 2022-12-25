@@ -44,7 +44,7 @@ jobs:
           az deployment sub what-if \
             --name ${{ github.run_id }} \
             --parameters resourcesPrefix="${{ steps.resources_prefix.outputs.result }}" \
-            --template-file ./iac/bicep/template.bicep \
+            --template-file ./iac/template.bicep \
             --location eastus
            az logout
           
@@ -84,6 +84,6 @@ jobs:
           az deployment sub create \
             --name ${{ github.run_id }} \
             --parameters resourcesPrefix="${{ steps.resources_prefix.outputs.result }}" \
-            --template-file ./iac/bicep/template.bicep \
+            --template-file ./iac/template.bicep \
             --location eastus
            az logout
