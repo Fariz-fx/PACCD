@@ -3,8 +3,10 @@ name: Docker Build Image
 on: 
   #push:
     #branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_run:
-    workflows: ["Build Python application"]
+    workflows: ["Build Python application and Check Vulnerabilities"]
     branches: [main]
     types: 
       - completed
@@ -86,7 +88,7 @@ jobs:
           run:
             ls         
         
-        - name: 'Build and push image'
+        - name: 'Build & Push image'
           uses: azure/docker-login@v1
           with:
             login-server: ${{ secrets.ACR_LOGIN_SERVER }}
@@ -95,3 +97,4 @@ jobs:
         - run: |
             docker build . -f Dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
             docker push ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
+    
