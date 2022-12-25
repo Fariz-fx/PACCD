@@ -40,19 +40,19 @@ jobs:
           username: ${{ secrets.FXTEUPACCD01CA_REGISTRY_USERNAME }}
           password: ${{ secrets.FXTEUPACCD01CA_REGISTRY_PASSWORD }}
                 
-      - name: Create .env file
-        uses: SpicyPizza/create-envfile@v1.3.0
-        with:
-          envkey_URI: ${{ secrets.COSMOS_URI }}
-          envkey_KEY: ${{ secrets.COSMOS_KEY }}
-          envkey_APPINSIGHTS_INSTRUMENTATIONKEY: ${{ secrets.APPINSIGHTS_INSTRUMENTATIONKEY }}
-          file_name: .env
-          fail_on_empty: true
+      #- name: Create .env file
+        #uses: SpicyPizza/create-envfile@v1.3.0
+        #with:
+          #envkey_URI: ${{ secrets.COSMOS_URI }}
+          #envkey_KEY: ${{ secrets.COSMOS_KEY }}
+          #envkey_APPINSIGHTS_INSTRUMENTATIONKEY: ${{ secrets.APPINSIGHTS_INSTRUMENTATIONKEY }}
+          #file_name: .env
+          #fail_on_empty: true
 
-      - name: Check the .env file
-        run: |
-          pwd
-          ls
+      #- name: Check the .env file
+        #run: |
+          #pwd
+          #ls
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
@@ -62,10 +62,10 @@ jobs:
           file: ./api/Dockerfile
           context: ./api
           
-      - name: List files
-        run: |
-          pwd
-          ls
+      #- name: List files
+        #run: |
+          #pwd
+          #ls
          
 
 
