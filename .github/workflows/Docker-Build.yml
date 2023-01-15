@@ -96,5 +96,5 @@ jobs:
             password: ${{ secrets.ACR_PASSWORD }}
         - run: |
             docker build . -f Dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
-            docker push ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
+            # docker push ${{ secrets.ACR_LOGIN_SERVER }}/fenesys:${{ github.run_id }}
     
